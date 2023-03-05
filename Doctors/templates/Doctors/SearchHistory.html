@@ -1,0 +1,70 @@
+{% extends 'Doctors/Head.html' %}
+{% load static %}
+
+<html><head>
+    <title>Search History</title>
+</head>
+    <br>
+    {% block content %}
+    <br><br><br>
+    <div align="center">
+    <form method="post" align="center" id="SearchPatient" >
+        <br><br><br><center><h2>PATIENTS HISTORY DETAILS</h2></center><br><br><br>
+        {% csrf_token %}
+        
+                <tr>
+                    <td>NAME OF PATIENT</td>
+                <td><input type="text" name="u_name" id="u_name" autocomplete="off" required="" style="width:200px;" style="width:200px;"></td>
+            </tr>
+            <tr>
+                <td>REGISTERED MOBILE NO</td>
+                <td><input type="text" name="u_phoneno" id="u_phoneno" autocomplete="off" required="" style="width:200px;" style="width:200px;"></td>
+            </tr>
+               <tr>
+                <td><input type="submit" name="search" value="Search" id="saerch" style="width:100px;" style="width:100px;"></td>
+               </tr>
+               <br><br><br>
+               
+                {% if sel %}
+                <div id="tab">
+                <table border="1" align="center" cellpadding="10" style="border-collapse:collapse">
+                    <tr>
+                        <td>Medicine Title</td>
+                        <td>Medicine Remark</td>
+                        <td>Medicine</td>
+                        <td>Medicine Report</td>
+                        <td>Date</td>
+                        <td>Doctor Name</td>
+                        <td>Doctor Contact</td>
+                        <td>Doctor Email</td>
+                        <td>Department</td>
+                        <td>Hospital Name</td>
+                        <td>Hospital Address></Address></td>
+
+                        
+                    </tr>
+                   {% for i in sel %}
+                   <tr>
+                    <td>{{i.medicine_title}}</td>
+                    <td>{{i.medicine_remark}}</td>
+                    <td>{{i.medicine}}</td>
+                    <td><a href="/{{i.medicine_report}}" download=""><i class="fa fa-file-pdf-o" style="font-size:48px;color:red"></i></a></td>
+                    <td>{{i.checkdetails.checkd_bookingdate}}</td>   
+                    <td>{{i.checkdetails.token.Dr_availability.doctor.Doctor_name}}</td>
+                    <td>{{i.checkdetails.token.Dr_availability.doctor.Doctor_contact}}</td>  
+                    <td>{{i.checkdetails.token.Dr_availability.doctor.Doctor_emailid}}</td>
+                    <td>{{i.checkdetails.token.Dr_availability.doctor.Doctor_department.Dr_deptname}}</td>
+                    <td>{{i.checkdetails.token.Dr_availability.doctor.Doctor_hospital.Hos_name}}</td>
+                    <td>{{i.checkdetails.token.Dr_availability.doctor.Doctor_hospital.Hos_address}}</td>
+                   </tr>
+                   {% endfor %}
+                </table>
+</form>
+</div>
+{% endif %}
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+</body>
+</html>
+
+{% endblock content %}

@@ -1,0 +1,53 @@
+{% extends 'Consultancy/Head.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChangePassword</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <br><br><br><br><h1 align="center">Change Password</h1><br><br><br><br>
+        <div id="tab" align="center">
+
+        <table border="2" align="center">
+         <tr>
+            <td>Current Password</td>
+            <td><input type="password" name="cpwd" id="" placeholder="Enter Current Password" required="" autocomplete="off"></td>
+         </tr>
+         <tr>
+            <td>New Password</td>
+            <td><input type="password" name="npwd" id="" placeholder="Enter New Password" required="" autocomplete="off"></td>
+         </tr>
+         <tr>
+            <td>Confirm Password</td>
+            <td><input type="password" name="cfpwd" id="" placeholder="Re-Enter New Password" onblur="return checkpwd(this,npwd)" required="" autocomplete="off"></td>
+         </tr>
+         <tr>
+            <td colspan="2" align="center"><input type="submit" name="save" value="Change">
+                <input type="reset" name="cancel" value="Cancel"></td>
+            </tr>
+        </table>
+    </form>
+    {{Error}}
+</body>
+</html>
+<br><br><br><br><br><br><br><br>
+{% endblock content %}
+
+<script>
+    function checkpwd(confirm, passwd) {
+        if (confirm.value != passwd.value) {
+            alert("Password Mismatch")
+            return false
+        }
+        else {
+            return true
+        }
+    }
+</script>

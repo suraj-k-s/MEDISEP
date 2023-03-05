@@ -1,0 +1,60 @@
+{% extends 'Doctors/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        ----DOCTOR PROFILE----
+    </title>
+</head>
+<body>
+    {% block content %}
+<form action="" method="post">
+    <div id="tab">
+        <br><br><br><center><h2>Profile</h2></center><br><br><br>
+    <table border="3" align="center">
+        <tr>
+            <td colspan="2" align="center"><img src="{{DrPF.Doctor_photo.url}}" width="100px" height="100px" /></td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>{{DrPF.Doctor_name}}</td>
+        </tr>
+        <tr>
+            <td>Contact</td>
+            <td>{{DrPF.Doctor_contact}}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{DrPF.Doctor_emailid}}</td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>{{DrPF.Doctor_address}}</td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td>{{DrPF.Doctor_age}}</td>
+        </tr>
+        <tr>
+            <td>Qualification</td>
+            <td>{{DrPF.Doctor_qualification}}</td>
+        </tr>
+        <tr>
+            <td>
+                <a href="{% url 'doctor:Up_Profile' DrPF.id %}">EditProfile</a>
+                <a href="{% url 'doctor:Dr_ChangePwd' DrPF.id %}">ChangePassword</a>  
+            </td>
+        </tr>  
+    </table>
+</div>
+<br><br><br><br>
+</form>
+{% endblock content %}
+    
+</body>
+</html>

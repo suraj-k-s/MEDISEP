@@ -1,0 +1,156 @@
+{% extends 'Admin/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post" id="EmpRegForm" enctype="multipart/form-data" data-subdiv-url="{% url 'webadmin:Ajax-SubDep' %}" data-gradepost-url="{% url 'webadmin:Ajax-Grade' %}">
+        {% csrf_token %}
+        <div id="tab" align="center">
+        <br><br><br><br><center><h2>EMPLOYEE REGISTRATION</h2></center><br><br><br><br>
+        
+        <table border="3" align="center">
+            <tr> 
+                <td>NAME OF EMPLOYEE</td>
+                <td><input type="text" name="txt_emp_name" required="" autocomplete="off"></td>   <!--required and autocompete are uesd to avoid auto suggestions -->
+            </tr>
+            <tr><td>ADDRESS </td>
+                <td><textarea name="txt_EMP_address" cols="20" rows="5"></textarea></td>
+            </tr>
+            <tr><td>CONTACT NUMBER </td>
+                <td><input type="text" name="txt_emp_contact" required="" autocomplete="off"></td>
+            </tr>
+            <tr><td>EMAIL ID OF EMPLOYEE</td>
+                <td><input type="text" name="txt_emp_emailid" required="" autocomplete="off"></td>
+            </tr>
+            <tr> 
+                <td>Gender</td>
+                <td><input type="radio" name="gender" value="Male">Male
+                    <input type="radio" name="gender" value="Female">Female
+                    <input type="radio" name="gender" value="Others">Others
+                </td>   <!--required and autocompete are uesd to avoid auto suggestions -->
+            </tr>
+            <tr><td>AGE</td>
+                <td><input type="text" name="txt_emp_age" required="" autocomplete="off"></td>
+            </tr>
+            <tr><td>PHOTO OF EMPLOYEE</td>
+                <td><input type="file" name="txt_empfile" required="" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td>DEPARTMENT NAME OF EMPLOYEE</td>       <!--- setting dropdown box of employee department name form-->
+                <td><select name="sel_Emp_deptname" id="emp_dept">
+                    <option value="">---select---</option>
+                    {%  for i in DP %}
+                    <option value="{{i.id}}">{{i}}</option>
+                    {% endfor %}
+                </select></td>
+            </tr>
+            <tr>
+                <td>DEPARTMENT SUB DIVISION</td>                    <!--- setting dropdown box of employee sub department in the form-->
+                <td><select name="sel_subdep" id="subdep">
+                    <option value="">---select---</option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>POST/GRADE OF EMPLOYEE</td>                    <!--- setting dropdown box of employee sub department in the form-->
+                <td><select name="sel_emp_grade" id="gradepost">
+                    <option value="">---select---</option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>PASSWORD</td>
+                <td><input type="password" name="emp_password" required="" autocomplete="off"></td>
+            </tr>
+            <tr><td>DATE OF JOINING</td>
+                <td><input type="date" name="txt_emp_doj" required="" autocomplete="off"></td>
+            </tr>
+            <tr><td>EMLOYEE ID/PEN/PPONO</td>
+                <td><input type="text" name="txt_emp_pen" required="" autocomplete="off"></td>
+            </tr>
+            <tr><td>No. of FAIMLY MEMBERS JOINED IN MEDISEP</td>
+                <td><input type="text" name="txt_fam_mems" required="" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td  colspan="2" align="center"><input type="submit" name="save" value="SAVE">
+                    <input type="reset" name="cancel" value="CANCEL"></td>
+            </tr>
+        </table>
+    
+        <br><br><br><br>
+        <div id="tab" align="center">
+        <table border="2" align="center">     <!--- dispay the list of district which are we entered-->
+            <tr>
+                <th>NAME OF EMPLOYEE</th> 
+                <th>CONTACT NUMBER </th>
+                <th>EMAIL ID OF EMPLOYEE</th>
+                <th>GENDER</th>
+                <th>AGE</th>
+                <th>PHOTO</th>
+                <th>DEPARTMENT NAME OF EMPLOYEE</th>
+                <th>DEPARTMENT SUB DIVISION</th>
+                <th>POST/GRADE OF EMPLOYEE</th>
+                <th>EMLOYEE ID/PEN/PPONO</th>
+                <th>No. of FAIMLY MEMBERS JOINED IN MEDISEP</th>
+                <th colspan="2">Action</th>
+            </tr>
+            
+            {% for i in emp_reg %}
+            <tr>
+                <td>{{i.Emp_name}}</td>
+                <td>{{i.Emp_contact}}</td>
+                <td>{{i.Emp_emailid}}</td>
+                <td>{{i.Emp_gender}}</td>
+                <td>{{i.Emp_age}}</td>
+                <td><img src="{{i.Emp_photo.url}}" alt="" width="120px" height="120px"></td>
+                <td>{{i.Emp_gradepost.Emp_subdept.Emp_deptid}}</td>
+                <td>{{i.Emp_gradepost.Emp_subdept}}</td>
+                <td>{{i.Emp_gradepost}}</td>
+                <td>{{i.PEN_NO}}</td>
+                <td>{{i.Num_fam_members}}</td>
+                <td><a href="{% url 'webadmin:dlt-EMP_REGISTRATION' i.id %}">Reject</a> |
+                    <a href="{% url 'webadmin:add-insur' i.id %}">Add Insurence</a>
+                    
+                </td>
+            </tr>   
+            {% endfor %}
+        </table>
+    </div>
+    </form>  
+    <br><br><br><br><br><br>
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!--Ajax of Place-->
+<script>
+    $("#emp_dept").change(function () {
+        var dept_id = $(this).val();
+        var ur = $("#EmpRegForm").attr("data-subdiv-url");
+        $.ajax({
+            url: ur,
+            data: { dept: dept_id, },
+            success: function (data) {
+                $("#subdep").html(data);
+            },
+        });
+    });
+    $("#subdep").change(function () {
+        var gid = $(this).val();
+        var ur = $("#EmpRegForm").attr("data-gradepost-url");
+        $.ajax({
+            url: ur,
+            data: { dept: gid, },
+            success: function (data) {
+                $("#gradepost").html(data);
+            },
+        });
+    });
+</script>      
+
+{% endblock content %}

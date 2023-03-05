@@ -1,0 +1,40 @@
+{% extends 'Consultancy/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post" id="EmpRegForm" enctype="multipart/form-data" data-subdiv-url="{% url 'webadmin:Ajax-SubDep' %}" data-gradepost-url="{% url 'webadmin:Ajax-Grade' %}">
+        {% csrf_token %}
+        <br><br><br><br><h1 align="center">Edit Profile</h1><br><br><br><br>
+        <div id="tab" align="center">
+
+        <table border="3" align="center">
+            <tr> 
+                <td>NAME</td>
+                <td><input type="text" name="txt_con_name" value="{{UpCon.Consultancy_name}}" required="" autocomplete="off"></td>   <!--required and autocompete are uesd to avoid auto suggestions -->
+            </tr>
+            <tr>
+                <td>HEAD</td>
+                <td><input type="text" name="txt_con_head" value="{{UpCon.Consultancy_head}}" required="" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" name="save" value="UPDATE">
+                    <input type="reset" name="cancel" value="CANCEL"></td>
+            </tr>
+        </table>
+        <br><br><br><br>
+    </form>  
+    <br><br>
+    <br><br><br><br><br><br><br><br>
+    {% endblock content %}
+</body>
+</html>
+    

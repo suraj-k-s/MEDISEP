@@ -1,0 +1,30 @@
+{% extends 'Employee/Head.html' %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+    <table border="3" align="center">
+        <tr><td>RELATIONSHIP TO EMPLOYEE</td>
+            <td><input type="text" name="txt_mem_relation" value="{{MD.Mem_relation}}"></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><input type="submit" name="submit" value="SAVE">
+                <input type="reset" name="cancel" value="CANCEL"></td>
+        </tr>
+    </table> 
+    </form>
+</body>
+</html>
+{% endblock %}
+<br><br><br><br><br><br><br><br><br><br>

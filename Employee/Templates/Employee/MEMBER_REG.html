@@ -1,0 +1,121 @@
+{% extends 'Employee/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post" id="MemberForm" enctype="multipart/form-data" data-subdiv-url="{% url 'webadmin:Ajax-SubDep' %}"
+     data-gradepost-url="{% url 'webadmin:Ajax-Grade' %}" data-places-url="{% url 'guest:Ajax_Place' %}">
+        {% csrf_token %}
+        <br><br><br><br><br><center><h2>EMPLOYEE FAMILY MEMBERS REGISTRATION</h2></center><br><br><br><br><br>
+        <table border="3" align="center">
+            <tr> 
+                <td>NAME OF MEMBER</td>
+                <td><input type="text" name="txt_mem_name" required="" autocomplete="off"></td>   <!--required and autocompete are uesd to avoid auto suggestions -->
+            </tr>
+            <tr><td>ADDRESS </td>
+                <td><textarea name="txt_mem_address" cols="20" rows="5"></textarea></td>
+            </tr>
+            <tr><td>CONTACT NUMBER </td>
+                <td><input type="text" name="txt_mem_contact" required="" autocomplete="off"></td>
+            </tr>
+            <tr><td>EMAIL ID OF MEMBER</td>
+                <td><input type="text" name="txt_mem_emailid" required="" autocomplete="off"></td>
+            </tr>
+            <tr> 
+                <td>Gender</td>
+                <td><input type="radio" name="gender" value="Male">Male
+                    <input type="radio" name="gender" value="Female">Female
+                    <input type="radio" name="gender" value="Others">Others
+                </td>   <!--required and autocompete are uesd to avoid auto suggestions -->
+            </tr>
+            <tr><td>AGE</td>
+                <td><input type="text" name="txt_mem_age" required="" autocomplete="off"></td>
+            </tr>
+            <tr><td>PHOTO OF MEMBER</td>
+                <td><input type="file" name="txt_memfile" required="" autocomplete="off"></td>
+            </tr>
+            <tr><td>MEMBER PASSWORD</td>
+                <td><input type="password" name="txt_mem_pswd" required="" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td>DISTRICT</td>       <!--- setting dropdown box of employee department name form-->
+                <td><select name="sel_district" id="district">
+                    <option value="">---select---</option>
+                    {%  for i in DIS %}
+                    <option value="{{i.id}}">{{i}}</option>
+                    {% endfor %}
+                </select></td>
+            </tr>
+            <tr>
+                <td>PLACE LOCATED</td>       <!--- setting dropdown box of employee department name form-->
+                <td><select name="sel_place" id="place">
+                    <option value="">---select---</option>
+                </select></td>
+            </tr>
+            <tr><td>PATIENT OP</td>
+                <td><input type="text" name="txt_mem_patient" required="" autocomplete="off"></td>
+            </tr>    
+            <tr>
+                <td  colspan="2" align="center"><input type="submit" name="save" value="SAVE">
+                    <input type="reset" name="cancel" value="CANCEL"></td>
+            </tr>
+        </table>
+        <br><br><br>
+        <table border="2" align="center" cellpadding="20">     <!--- dispay the list of district which are we entered-->
+            <tr>
+                <th>NAME OF MEMBER</th> 
+                <th>ADDRESS</th>
+                <th>CONTACT NUMBER </th>
+                <!--<th>EMAIL ID OF MEMBER</th>
+                <th>GENDER</th>
+                <th>AGE</th>--->
+                <th>PHOTO OF MEMBER</th>
+                <!---<th>DISTRICT</th>
+                <th>PLACE</th>--->
+                <th colspan="2">Action</th>
+            </tr>
+            
+            {% for i in emp_reg %}
+            <tr>
+                <td>{{i.Mem_name}}</td>
+                <td>{{i.Mem_address}}</td>
+                <td>{{i.Mem_contact}}</td>
+                <!--<td>{{i.Mem_emailid}}</td>
+                <td>{{i.Mem_gender}}</td>
+                <td>{{i.Mem_age}}</td>--->
+                <td><img src="{{i.Mem_photo.url}}" alt="" width="120px" height="120px"></td>
+                <!--<td>{{i.Mem_place.district}}</td>
+                <td>{{i.Mem_place}}</td>--->
+                <td><a href="{% url 'employee:Dlt_MemReg' i.id %}">Delete</a></td>   
+                <td><a href="{% url 'employee:view_mem_details' i.id %}">ADD RELATIONSHIP TO EMPLOYEE</a></td>   
+            </tr>   
+            {% endfor %}
+        </table>
+</body>
+</html>
+<br><br><br><br><br><br><br><br><br><br>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!--Ajax of Place-->
+    <script>
+        $("#district").change(function () {
+            var did = $(this).val();
+            var ur = $("#MemberForm").attr("data-places-url");
+            $.ajax({
+                url: ur,
+                data: { DIST: did, },
+                success: function (data) {
+                    $("#place").html(data);
+                },
+            });
+        });
+</script>
+
+{% endblock content %}

@@ -1,0 +1,61 @@
+{% extends 'Patients/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <br><br><br>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table border="1" align="center">
+            <tr>
+                <td>DepartMent</td>       <!--- setting dropdown box of employee department name form-->
+                <td><select name="seldept" id="seldept">
+                    <option value="">---select---</option>
+                    {%  for i in dept %}
+                    <option value="{{i.id}}">{{i}}</option>
+                    {% endfor %}
+                </select></td>
+                <td><input type="submit" name="btnsave" value="Search" style="width:100px"></td>
+
+        </table>
+        <table align="center" cellpadding="50" style="border-collapse: collapse">
+            <tr>
+                {% for i in docs %}
+
+                <td>
+                    <div style="text-align:center;border:1px solid black;margin:22px;padding:20px">
+
+                        <p><img src="{{i.Doctor_photo.url}}" alt="Hai" width="100px" height="100px" /></p>
+                        <br>
+                        <p>{{i.Doctor_name}}</p>
+                        <br>
+                        <p>{{i.Doctor_contact}}</p>
+                        <br>
+                        <p>{{i.Doctor_emailid}}</p>
+                        <br>
+                        <p>{{i.Doctor_department.Dr_deptname}}</p>
+                        <br>
+                        <p><a href="{% url 'patient:viewavail' i.id %}">View Availability</a></p>
+                        <br>
+                    </div>
+                </td>
+                {% if forloop.counter|divisibleby:4 %}
+            </tr>
+            <tr>
+                {% endif %}
+
+
+                {% endfor %}
+        </table>
+        {% endblock content %}
+    </form>
+</body>
+</html>

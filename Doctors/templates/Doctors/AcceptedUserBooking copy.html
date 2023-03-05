@@ -1,0 +1,41 @@
+{% extends 'Doctors/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post">
+        <div id="tab">
+            <br><br><br><center><h2>Accepted UserBookings</h2></center><br><br><br>
+        {% csrf_token %}
+        <table border="2" align="center">     <!--- dispay the list of district which are we entered-->
+            <tr>
+                <th>Name Of user</th>
+                <th>Contact</th>
+                <th>Email</th>
+                <th>Name Of Doctor</th>
+                <th colspan="2">Action</th>
+            </tr>
+            {% for i in book %}
+            <tr>
+                <td>{{i.member_id.Mem_name}}</td>
+                <td>{{i.member_id.Mem_contact}}</td>
+                <td>{{i.member_id.Mem_emailid}}</td>
+                <td>{{i.token.Dr_availability.doctor}}</td>
+                <td><a href="{% url 'doctor:medicinedetails' i.id %}">Add Medicne Details</a></td>
+            </tr>
+            {% endfor %}
+            
+        </table>
+    </div>
+    </form>
+    {% endblock content %}
+</body>
+</html>

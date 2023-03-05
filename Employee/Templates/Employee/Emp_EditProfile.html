@@ -1,0 +1,49 @@
+{% extends 'Employee/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post" id="EmpRegForm" enctype="multipart/form-data" data-subdiv-url="{% url 'webadmin:Ajax-SubDep' %}" data-gradepost-url="{% url 'webadmin:Ajax-Grade' %}">
+        {% csrf_token %}
+        <br><br><br><center><h2>EMPLOYEE EDIT_PROFILE</h2></center><br><br><br>
+        <table border="3" align="center">
+            <tr> 
+                <td>NAME OF EMPLOYEE</td>
+                <td><input type="text" name="txt_emp_name" value="{{UpEmp.Emp_name}}" required="" autocomplete="off"></td>   <!--required and autocompete are uesd to avoid auto suggestions -->
+            </tr>
+            <tr>
+                <td>CONTACT NUMBER </td>
+                <td><input type="text" name="txt_emp_contact" value="{{UpEmp.Emp_contact}}" required="" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td>ADDRESS </td>
+                <td><input type="text" name="txt_emp_address" value="{{UpEmp.Emp_address}}"" required="" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td>EMAIL ID OF EMPLOYEE</td>
+                <td><input type="text" name="txt_emp_emailid" value="{{UpEmp.Emp_emailid}}" required="" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td>AGE</td>
+                <td><input type="text" name="txt_emp_age" value="{{UpEmp.Emp_age}}" required="" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" name="save" value="UPDATE">
+                    <input type="reset" name="cancel" value="CANCEL"></td>
+            </tr>
+        </table>
+        <br><br><br><br>
+    </form>  
+    <br><br>
+    {% endblock content %}
+</body>
+</html>
+    

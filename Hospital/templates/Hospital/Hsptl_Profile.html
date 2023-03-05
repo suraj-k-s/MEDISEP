@@ -1,0 +1,56 @@
+{% extends 'Hospital/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        ----HOSPITAL PROFILE----
+    </title>
+</head>
+<body>
+    {% block content %}
+<form action="" method="post">
+    <table border="3" align="center">
+        <tr>
+            
+            <td colspan="2" align="center"><img src="{{HSPF.Hos_logo.url}}"  alt="{{HSPF.Hos_logo.url}}" width="120px" height="120px" style="border-radius: 60px;"></td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>{{HSPF.Hos_name}}</td>
+        </tr>
+        <tr>
+            <td>Contact</td>
+            <td>{{HSPF.Hos_contact}}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{HSPF.Hos_emailid}}</td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>{{HSPF.Hos_address}}</td>
+        </tr>
+        <tr>
+            <td>Place</td>
+            <td>{{HSPF.Hos_Place}}</td>
+        </tr>
+        <tr>
+            <td>Hospital_type</td>
+            <td>{{HSPF.Hospital_type}}</td>
+        </tr>
+        <tr>
+            <td>
+                <a href="{% url 'hospital:Up_Profile' HSPF.id %}">EditProfile</a>
+                <a href="{% url 'hospital:HS_ChangePwd' HSPF.id %}">ChangePassword</a>  
+            </td>
+        </tr>  
+    </table>
+</form>
+{% endblock content %}
+</body>
+</html>

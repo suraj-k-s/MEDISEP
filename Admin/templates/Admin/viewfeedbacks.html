@@ -1,0 +1,81 @@
+{% extends 'Admin/Head.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <br><br><br><br><b><h1 align="center">Feedbacks</h1></b><br>
+        <div id="tab" align="center">
+        <center><h2>User Feedbacks</h2></center>
+        <table align="center" border="1">
+            <tr>
+            
+                <th>User Name</th>
+                <th>Feedbacks</th>
+            </tr>
+            {% for i in U %}
+            <tr>
+                <td>{{i.Member.Mem_name}}</td>
+                <td>{{i.description}}</td>
+            </tr>
+            {% endfor %}
+            
+        </table>
+        <br><br><br><center><h2>Hospital Feedbacks</h2></center>
+        <table align="center" border="1">
+            <tr>
+            
+                <th>Hospital Name</th>
+                <th>Feedbacks</th>
+            </tr>
+            {% for i in H %}
+            <tr>
+                <td>{{i.hospital.Hos_name}}</td>
+                <td>{{i.description}}</td>
+            </tr>
+            {% endfor %}
+            
+        </table>
+        <br><br><br><center><h2>Consultancy Feedbacks</h2></center>
+        <table align="center" border="1">
+            <tr>
+            
+                <th>Consultancy Name</th>
+                <th>Feedbacks</th>
+            </tr>
+            {% for i in C %}
+            <tr>
+                <td>{{i.consultancy.Consultancy_name}}</td>
+                <td>{{i.description}}</td>
+            </tr>
+            {% endfor %}
+            
+        </table>
+        <br><br><br><center><h2>Doctor Feedbacks</h2></center>
+        <table align="center" border="1">
+            <tr>
+            
+                <th>Doctor Name</th>
+                <th>Feedbacks</th>
+            </tr>
+            {% for i in D %}
+            <tr>
+                <td>{{i.doctor.Doctor_name}}</td>
+                <td>{{i.description}}</td>
+            </tr>
+            {% endfor %}
+            
+        </table>
+    </form>
+    <br><br><br><br><br><br><br><br>
+    {% endblock content %}
+</body>
+</html>

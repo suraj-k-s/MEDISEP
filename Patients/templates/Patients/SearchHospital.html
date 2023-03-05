@@ -1,0 +1,85 @@
+{% extends 'Patients/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+{{Error}}
+<body>
+    {% block content %}
+    <form action="" method="post" id="SearchHos" data-places-url="{% url 'guest:Ajax_Place' %}">
+        <div id="tab">
+            <br><br><br><center><h2>Search Hospital</h2></center><br><br><br>
+        {% csrf_token %}
+        <table align="center">
+            <tr>
+                <td>DISTRICT</td>       <!--- setting dropdown box of employee department name form-->
+                <td><select name="sel_hos_district" id="district">
+                    <option value="">---select---</option>
+                    {%  for i in DIS %}
+                    <option value="{{i.id}}">{{i}}</option>
+                    {% endfor %}
+                </select></td>
+            
+                <td>PLACE LOCATED</td>       <!--- setting dropdown box of employee department name form-->
+                <td><select name="sel_hos_place" id="place">
+                    <option value="">---select---</option>
+                </select></td>
+                <td  colspan="5"><input type="submit" value="Search" name="btnsave" style="width:100px"></td>
+            </tr>
+        </table>
+        <br>
+        <hr>
+        <br>
+        <table align="center" cellpadding="50" style="border-collapse: collapse">
+            <tr>
+                {% for i in data %}
+
+                <td>
+                    <div style="text-align:center;border:1px solid black;margin:22px;padding:20px">
+
+                        <p><img src="{{i.Hos_logo.url}}" alt="Hai" width="100px" height="100px" /></p>
+                        <br>
+                        <p>{{i.Hos_name}}</p>
+                        <br>
+                        <p>{{i.Hos_contact}}</p>
+                        <br>
+                        <p>{{i.Hos_email}}</p>
+                        <br>
+                        <p><a href="{% url 'patient:doclist' i.id %}">View Doctors</a></p>
+                        <br>
+                    </div>
+                </td>
+                {% if forloop.counter|divisibleby:4 %}
+            </tr>
+            <tr>
+                {% endif %}
+
+
+                {% endfor %}
+        </table>
+    </div>
+    </form>
+    <br><br><br>
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!--Ajax of Place-->
+    <script>
+        $("#district").change(function () {
+            var did = $(this).val();
+            var ur = $("#SearchHos").attr("data-places-url");
+            $.ajax({
+                url: ur,
+                data: { DIST: did, },
+                success: function (data) {
+                    $("#place").html(data);
+                },
+            });
+        });
+</script>
+{% endblock content %}

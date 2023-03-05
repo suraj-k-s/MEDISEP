@@ -1,0 +1,60 @@
+{% extends 'Consultancy/Head.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <br><br><br><br><h1 align="center">Add Availability</h1><br><br><br><br>
+        <div id="tab" align="center">
+
+        <table border="1" align="center" cellpadding="10">
+            <tr>
+                <td>From Time</td>
+                <td><input type="time" name="txt_f" id="txt_f"></td>
+            </tr>
+            <tr>
+                <td>To Time</td>
+                <td><input type="time" name="txt_t" id="txt_t"></td>
+            </tr>
+            <tr>
+                <td>Date</td>
+                <td><input type="date" name="txt_d" id="txt_d"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" value="Add" name="btnsave"></td>
+            </tr>
+        </table>
+        <hr>
+        <br>
+        <br>
+        <table border="1" align="center" cellpadding="10">
+        <tr>
+            <th>Date</th>
+            <th>From Time</th>
+            <th>To Time</th>
+            <th colspan="2">Action</th>
+        </tr>
+        {% for i in av %}
+        <tr>
+            <td>{{i.avail_date}}</td>
+            <td>{{i.avail_fromTime}}</td>
+            <td>{{i.avail_toTime}}</td>
+    
+            <td><a href="{% url 'consultancy:genaratetoken' i.id %}">Set Token</a></td>   
+            <td><a href="{% url 'consultancy:dlt-avail' i.id %}">Delete</a></td>   <!---Delete-->
+        </tr>
+        {% endfor %}
+        </table>
+        <br><br><br><br><br><br><br><br>
+        {% endblock content %}
+    </form>
+</body>
+</html>

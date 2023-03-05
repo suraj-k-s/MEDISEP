@@ -1,0 +1,58 @@
+{% extends 'Consultancy/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    {% block content %}
+    <form action="" method="post">
+        <br><br><br><br>
+        <h1 align="center">Generate Token</h1><br><br><br><br>
+        <div id="tab" align="center">
+
+            {% csrf_token %}
+            <table border="1" align="center" cellpadding="10">
+                <tr>
+                    <td>Token Count</td>
+                    <td><input type="text" name="txt_c" id="txt_c" min="1"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" value="Genarate" name="btnsave"></td>
+                </tr>
+            </table>
+            <br><br><br><br><br><br><br><br>
+            <table border="2" align="center" cellpadding="20">
+                <!--- dispay the list of district which are we entered-->
+                <tr>
+                    <th>NAME OF DOCTOR</th>
+                    <th>DATE</th>
+                    <th>FROM TIME</th>
+                    <th>TO TIME</th>
+                    <th>GENERATED TOKENS</th>
+                    <th colspan="2">Action</th>
+                </tr>
+                {% for i in dr_tokens %}
+                <tr>
+                    <td>{{i.Dr_availability.doctor.Doctor_name}}</td>
+                    <td>{{i.Dr_availability.avail_date}}</td>
+                    <td>{{i.Dr_availability.avail_fromTime}}</td>
+                    <td>{{i.Dr_availability.avail_toTime}}</td>
+                    <td>{{i.Token_Booking_status}}</td>
+                    <td><a href="{% url 'consultancy:dlt-token' i.id %}">Delete</a></td> 
+                </tr>
+                {% endfor %}
+                </table>
+    </form>
+    <br><br><br><br><br><br><br><br>
+    {% endblock content %}
+</body>
+
+</html>

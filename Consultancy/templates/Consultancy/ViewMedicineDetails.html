@@ -1,0 +1,49 @@
+{% extends 'Consultancy/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post">
+        <br><br><br><br><h1 align="center">View Medicine Details</h1><br><br><br><br>
+        <div id="tab" align="center">
+
+        {% csrf_token %}
+        <table border="1" align="center">
+            <tr>
+                <th>Medicine</th>
+                <th>Major or Not</th>
+                <th>Remark</th>
+                <th colspan="2">Action</th>
+            </tr>
+            {% for i in res%}
+            <tr>
+                <td>{{i.medicine}}</td>
+                {% if i.is_major == 1 %}
+                <td>Yes</td>
+                {% else %}
+                <td>No</td>
+                {% endif %}
+                <td>{{i.medicine_remark}}</td>
+                {% if coun > 0 %}
+                <td><a href="{% url 'consultancy:viewerequest' %}">View claims</a></td>
+               
+                {% else %}
+                <td><a href="{% url 'consultancy:applyclaim' i.id %}">Apply Claim</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+
+        </table>
+    </form>
+    <br><br><br><br><br><br><br><br>
+    {% endblock content %}
+</body>
+</html>

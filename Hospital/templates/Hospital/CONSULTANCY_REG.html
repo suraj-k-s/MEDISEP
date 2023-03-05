@@ -1,0 +1,62 @@
+{% extends 'Hospital/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <br><br><br><center><h2>CONSULTANCY REGISTRATION</h2></center><br><br><br>
+        <table border="3" align="center">
+            <tr> 
+                <td>NAME OF CONSULTANCY</td>
+                <td><input type="text" name="txt_consultancy_name" required="" autocomplete="off"></td>   <!--required and autocompete are uesd to avoid auto suggestions -->
+            </tr>
+            <tr> 
+                <td>HEAD OF CONSULTANCY</td>
+                <td><input type="text" name="txt_consultancy_head" required="" autocomplete="off"></td>   <!--required and autocompete are uesd to avoid auto suggestions -->
+            </tr>
+            <tr> 
+                <td>LOGO OF CONSULTANCY</td>
+                <td><input type="file" name="txt_consultancyfile" required="" autocomplete="off"></td>  
+            </tr>
+            <tr><td>CONSULTANCY PASSWORD</td>
+                <td><input type="password" name="txt_consultancy_pswd" required="" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td  colspan="2" align="center"><input type="submit" name="save" value="SAVE">
+                    <input type="reset" name="cancel" value="CANCEL"></td>
+            </tr>
+        </table>
+        <br><br><br>
+        <table border="2" align="center">     <!--- dispay the list of district which are we entered-->
+            <tr>
+                <th>NAME OF CONSULTANCY</th> 
+                <th>HOSPITAL NAME</th>
+                <th>CONSULTANCY HEAD</th>
+                <th>CONSULTANCY LOGO</th>
+                <th>CONSULTANCY PASSWORD</th>
+                <th colspan="2">Action</th>
+            </tr>
+            
+            {% for i in ConsReg %}
+            <tr>
+                <td>{{i.Consultancy_name}}</td>
+                <td>{{i.Consultancy_hospital}}</td>
+                <td>{{i.Consultancy_head}}</td>
+                <td>{{i.Consultancy_logo}}</td>
+                <td>{{i.Consultancy_pswd}}</td>
+            </tr>
+            {% endfor %} 
+
+</body>
+<br><br><br><br><br><br>
+{% endblock content %}
+</html>

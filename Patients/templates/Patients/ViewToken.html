@@ -1,0 +1,45 @@
+{% extends 'Patients/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div id="tab">
+            <br><br><br><center><h2>View Token</h2></center><br><br><br>
+        <table align="center" cellpadding="50" style="border-collapse: collapse">
+            <tr>
+                {% for i in tok %}
+
+                <td>
+                    <div style="text-align:center;border:1px solid black;margin:22px;padding:20px">
+
+                       
+                        <p>Token No:{{i.token_no}}</p>
+                        <br>
+                        
+                        <p><a href="{% url 'patient:BookToken' i.id %}">Book</a></p>
+                        <br>
+                    </div>
+                </td>
+                {% if forloop.counter|divisibleby:4 %}
+            </tr>
+            <tr>
+                {% endif %}
+
+
+                {% endfor %}
+        </table>
+    </div>
+    </form>
+    {% endblock content %}
+</body>
+</html>

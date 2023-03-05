@@ -1,0 +1,65 @@
+{% extends 'Patients/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post">
+        <div id="tab">
+            <br><br><br><center><h2>Complaints</h2></center><br><br><br>
+        {% csrf_token %}
+        <table align="center" border="1">
+            <tr>
+                <td>ComplaintType</td>
+                <td><select name="ctype" id="">
+                    <option value="">---select---</option>
+                    {% for i in CT %}
+                      <option value="{{i.id}}">{{i}}</option>
+                    {% endfor %}
+                </select></td>
+            </tr>
+            <tr>
+                <td>Title</td>
+                <td><input type="text" name="title"></td>
+            </tr>
+            <tr>
+                <td>Content</td>
+                <td><textarea name="content" id="" cols="25" rows="5"></textarea></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" name="submit" value="SEND">
+                    <input type="reset" name="cancel" value="CANCEL">
+                </td>
+            </tr>
+        </table>
+        <br><br><br>
+        <table align="center" border="1">
+            <tr>
+                <th>ComplaintType</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th colspan="2">Action</th>
+            </tr>
+            {% for i in C %}
+            <tr>
+                <td>{{i.complainttype}}</td>
+                <td>{{i.title}}</td>
+                <td>{{i.content}}</td>
+                <td><a href="{% url 'patient:dlt-PATIENT_COMPLAINT' i.id %}">Delete</a></td>
+            </tr>
+            {% endfor %}
+            
+        </table>
+    </div>
+        {% endblock content %}
+    </form>
+</body>
+</html>

@@ -1,0 +1,150 @@
+{% extends 'Hospital/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post" id="DoctorRegForm" data-places-url="{% url 'guest:Ajax_Place' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <br><br><br><center><h2>DOCTOR REGISTRATION</h2></center><br><br><br>
+        <table border="3" align="center">
+            <tr> 
+                <td>NAME OF DOCTOR</td>
+                <td><input type="text" name="txt_dr_name" required="" autocomplete="off"></td>   <!--required and autocompete are uesd to avoid auto suggestions -->
+            </tr>
+            <tr><td>ADDRESS </td>
+                <td><textarea name="txt_dr_address" cols="20" rows="5"></textarea></td>
+            </tr>
+            <tr><td>CONTACT NUMBER </td>
+                <td><input type="text" name="txt_dr_contact" required="" autocomplete="off"></td>
+            </tr>
+            <tr><td>EMAIL ID OF DOCTOR</td>
+                <td><input type="text" name="txt_dr_emailid" required="" autocomplete="off"></td>
+            </tr>
+            <tr> 
+                <td>GENDER</td>
+                <td><input type="radio" name="gender" value="Male">Male
+                    <input type="radio" name="gender" value="Female">Female
+                    <input type="radio" name="gender" value="Others">Others
+                </td>   <!--required and autocompete are uesd to avoid auto suggestions -->
+            </tr>
+            <tr><td>AGE</td>
+                <td><input type="text" name="txt_dr_age" required="" autocomplete="off"></td>
+            </tr>
+            <tr><td>PHOTO OF DOCTOR</td>
+                <td><input type="file" name="txt_drfile" required="" autocomplete="off"></td>
+            </tr>
+            <tr><td>QUALIFICATION OF DOCTOR </td>
+                <td><input type="text" name="txt_dr_qualification" required="" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td>DISTRICT</td>       <!--- setting dropdown box of employee department name form-->
+                <td><select name="sel_district" id="district">
+                    <option value="">---select---</option>
+                    {%  for i in DIS %}
+                    <option value="{{i.id}}">{{i}}</option>
+                    {% endfor %}
+                </select></td>
+            </tr>
+            <tr>
+                <td>PLACE LOCATED</td>       <!--- setting dropdown box of employee department name form-->
+                <td><select name="sel_place" id="place">
+                    <option value="">---select---</option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>HOSPITAL NAME</td>                   <!--- setting dropdown box in the form-->
+                    <td><select name="sel_hospital_name" >
+                        <option value="">---select---</option>
+                        {%  for i in HS %}
+                        <option value="{{i.id}}">{{i}}</option>
+                        {% endfor %}
+                    </select></td>
+                </tr>
+            </tr>
+            <tr><td>DEPARTMENT NAME</td>
+                <td><select name="sel_drdept_name" >
+                    <option value="">---select---</option>
+                    {%  for i in DR_dept %}
+                    <option value="{{i.id}}">{{i}}</option>
+                    {% endfor %}
+                </select></td>
+            </tr>
+            <tr><td>DOCTOR PASSWORD</td>
+                <td><input type="password" name="txt_dr_pswd" required="" autocomplete="off"></td>
+            </tr>
+            <tr><td>WHETHER DOCTOR IS ACTIVE OR NOT</td>
+                <td><input type="radio" name="doctor_isactive" value="YES">YES
+                    <input type="radio" name="doctor_isactive" value="NO">NO</td>
+            </tr>  
+            <tr><td>DATE OF JOINING</td>
+                <td><input type="date" name="txt_dr_doj" required="" autocomplete="off"></td>
+            </tr> 
+
+                
+            <tr>
+                <td  colspan="2" align="center"><input type="submit" name="save" value="SAVE">
+                    <input type="reset" name="cancel" value="CANCEL"></td>
+            </tr>
+        </table>
+        <br><br><br>
+        <table border="2" align="center">     <!--- dispay the list of district which are we entered-->
+            <tr>
+                <th>NAME OF DOCTOR</th> 
+                <th>ADDRESS</th>
+                <th>CONTACT NUMBER </th>
+                <th>EMAIL ID</th>
+                <th>GENDER</th>
+                <th>PHOTO OF DOCTOR</th>
+                <th>QUALIFICATION OF DOCTOR</th>
+                <th>PLACE</th>
+                <th>HOSPITAL NAME</th>
+                <th>DEPARTMENT NAME</th>
+                <th>WHETHER DOCTOR IS ACTIVE OR NOT</th>
+                <th colspan="2">Action</th>
+            </tr>
+            
+            {% for i in DrReg %}
+            <tr>
+                <td>{{i.Doctor_name}}</td>
+                <td>{{i.Doctor_address}}</td>
+                <td>{{i.Doctor_contact}}</td>
+                <td>{{i.Doctor_emailid}}</td>
+                <td>{{i.Doctor_gender}}</td>
+                <td><img src="{{i.Doctor_photo.url}}" alt="" width="120px" height="120px"></td>
+                <td>{{i.Doctor_qualification}}</td>
+                <td>{{i.Doctor_place}}</td>
+                <td>{{i.Doctor_hospital}}</td>
+                <td>{{i.Doctor_department}}</td>
+                <td>{{i.Doctor_isactive}}</td>
+                <td><a href="{% url 'hospital:dlt-DOCTOR_REGISTRATION' i.id %}">Delete</a></td>                      
+            </tr>   
+            {% endfor %}
+        </table>
+        <br><br><br><br><br><br>
+        
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!--Ajax of Place-->
+    <script>
+        $("#district").change(function () {
+            var did = $(this).val();
+            var ur = $("#DoctorRegForm").attr("data-places-url");
+            $.ajax({
+                url: ur,
+                data: { DIST: did, },
+                success: function (data) {
+                    $("#place").html(data);
+                },
+            });
+        });
+</script>
+{% endblock content %}

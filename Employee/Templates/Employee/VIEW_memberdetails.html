@@ -1,0 +1,65 @@
+{% extends 'Employee/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post" id="MemberForm" enctype="multipart/form-data" data-subdiv-url="{% url 'webadmin:Ajax-SubDep' %}"
+     data-gradepost-url="{% url 'webadmin:Ajax-Grade' %}" data-places-url="{% url 'guest:Ajax_Place' %}">
+        {% csrf_token %}
+        <br><br><br><br><br><center><h2>EMPLOYEE FAMILY MEMBERS DETAILS</h2></center><br><br><br><br><br>
+        <table border="3" align="center">
+            <tr><td>RELATIONSHIP TO EMPLOYEE</td>
+                <td><input type="text" name="txt_mem_relation" required="" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" name="submit" value="SAVE">
+                    <input type="reset" name="cancel" value="CANCEL"></td>
+            </tr>
+        </table>
+        <br><br><br>
+        <table border="2" align="center" cellpadding="20">     <!--- dispay the list of district which are we entered-->
+            <tr>
+                <th>NAME OF MEMBER</th> 
+                <th>ADDRESS</th>
+                <th>CONTACT NUMBER </th>
+                <th>EMAIL ID OF MEMBER</th>
+                <th>GENDER</th>
+                <th>AGE</th>
+                <th>PHOTO OF MEMBER</th>
+                <th>RELATIONSHIP TO EMPLOYEE</th>
+                <th>DISTRICT</th>
+                <th>PLACE</th>
+                <th colspan="2">Action</th>
+            </tr>
+            
+            {% for i in MEM %}
+            <tr>
+                <td>{{i.Mem_id.Mem_name}}</td>
+                <td>{{i.Mem_id.Mem_address}}</td>
+                <td>{{i.Mem_id.Mem_contact}}</td>
+                <td>{{i.Mem_id.Mem_emailid}}</td>
+                <td>{{i.Mem_id.Mem_gender}}</td>
+                <td>{{i.Mem_id.Mem_age}}</td>
+                <td><img src="{{i.Mem_id.Mem_photo.url}}" alt="" width="120px" height="120px"></td>
+                <td>{{i.Mem_relation}}</td>
+                <td>{{i.Mem_id.Mem_place.district}}</td>
+                <td>{{i.Mem_id.Mem_place}}</td>
+                <td><a href="{% url 'employee:Dlt_MemDetails' i.id %}">Delete</a></td>   
+                <td><a href="{% url 'employee:Up-MemDetails' i.id %}">Edit</a></td>  <!---Edit-->
+            </tr>   
+            {% endfor %}
+        </table>
+</body>
+</html>
+<br><br><br><br><br><br><br><br><br><br>
+
+
+{% endblock content %}

@@ -1,0 +1,60 @@
+{% extends 'Employee/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        ----EMPLOYEE PROFILE----
+    </title>
+</head>
+<body>
+    {% block content %}
+<form action="" method="post">
+    <div id="tab">
+    <br><br><br><center><h3>EMPLOYEE PROFILE</h3></center><br><br><br>
+    <table border="3" align="center" width="600px">
+        <tr>
+            
+            <td colspan="2" align="center"><img src="{{EmpPF.Emp_photo.url}}"  alt="{{EmpPF.Emp_photo.url}}" width="120px" height="120px" style="border-radius: 60px;"></td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>{{EmpPF.Emp_name}}</td>
+        </tr>
+        <tr>
+            <td>Contact</td>
+            <td>{{EmpPF.Emp_contact}}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{EmpPF.Emp_emailid}}</td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>{{EmpPF.Emp_address}}</td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td>{{EmpPF.Emp_age}}</td>
+        </tr>
+        <tr>
+            <td>GradePost</td>
+            <td>{{EmpPF.Emp_gradepost}}</td>
+        </tr>
+        <tr>
+            <td>
+                <a href="{% url 'employee:Up_Profile' EmpPF.id %}">EditProfile</a>
+                <a href="{% url 'employee:Emp_ChangePwd' EmpPF.id %}">ChangePassword</a>  
+            </td>
+        </tr>  
+    </table>
+</div>
+</form>
+<br><br><br><br><br><br>
+{% endblock content %}
+</body>
+</html>

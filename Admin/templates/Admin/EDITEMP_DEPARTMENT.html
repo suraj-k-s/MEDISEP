@@ -1,0 +1,34 @@
+{% extends 'Admin/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <body>
+        {% block content %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <div id="tab" align="center" style="margin-left:250px">
+            <br><br><br><br><h1 align="center">Edit Employee Department</h1><br><br><br><br>
+            
+            <table border="3" align="center">
+                <tr> 
+                    <td>DEPARTMENT NAME OF EMPLOYEE</td>
+                    <td><input type="text" name="txt_emp_dept" value="{{ET.Emp_deptname}}" autocomplete="off"></td>   <!--required and autocompete are uesd to avoid auto suggestions -->
+                </tr>
+                <tr>
+                    <td  colspan="2" align="center"><input type="submit" name="save" value="SAVE">
+                        <input type="reset" name="cancel" value="CANCEL"></td>
+                </tr>
+            </table>
+        </div>
+</body>
+</html>
+<br><br><br><br><br><br><br><br>
+{% endblock content %}

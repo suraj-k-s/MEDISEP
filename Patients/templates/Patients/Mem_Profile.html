@@ -1,0 +1,61 @@
+{% extends 'Patients/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        ----MEMBER PROFILE----
+    </title>
+</head>
+<body>
+    {% block content %}
+<form action="" method="post">
+    <div id="tab">
+        <br><br><br><center><h2>MEMBER PROFILE</h2></center><br><br><br>
+        
+    <table border="3" align="center">
+        <tr>
+            
+            <td colspan="2" align="center"><img src="{{MP.Mem_photo.url}}"  alt="{{MP.Mem_photo.url}}" width="120px" height="120px" style="border-radius: 60px;"></td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>{{MP.Mem_name}}</td>
+        </tr>
+        <tr>
+            <td>Contact</td>
+            <td>{{MP.Mem_contact}}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{MP.Mem_emailid}}</td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>{{MP.Mem_address}}</td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td>{{MP.Mem_age}}</td>
+        </tr>
+        <tr>
+            <td>Place</td>
+            <td>{{MP.Mem_place}}</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <a href="{% url 'patient:Up_Profile' MP.id %}">EditProfile</a>
+                <a href="{% url 'patient:M_ChangePwd' MP.id %}">ChangePassword</a>  
+            </td>
+        </tr>  
+    </table>
+</div>
+</form>
+{% endblock content %}
+    
+</body>
+</html>

@@ -1,0 +1,43 @@
+{% extends 'Consultancy/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post">
+        <br><br><br><br><h1 align="center">View Doctors</h1><br><br><br><br>
+        <div id="tab" align="center">
+
+        {% csrf_token %}
+        <table  border="1" align="center" cellpadding="10">
+            <tr><th>Photo</th>
+                <th>Name</th>
+                <th>contact</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th colspan="2">Action</th>
+            </tr>
+            {% for i in doc %}
+            <tr>
+                <td><img src="{{i.Doctor_photo.url}}" alt="" width="120px" height="120px"></td>
+                <td>{{i.Doctor_name}}</td>
+                <td>{{i.Doctor_contact}}</td>
+                <td>{{i.Doctor_emailid}}</td>
+                <td>{{i.Doctor_department}}</td>
+                <td><a href="{% url 'consultancy:Add-av' i.id %}">Add AvailAbility</a></td>   <!---Delete-->
+            
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+    <br><br><br><br><br><br><br><br>
+    {% endblock content %}
+</body>
+</html>

@@ -1,0 +1,45 @@
+{% extends 'Doctors/Head.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post">
+        <div id="tab">
+            <br><br><br><center><h2>Feedbacks</h2></center><br><br><br>
+        {% csrf_token %}
+        <table align="center" border="1">
+            <tr>
+                <td>Description</td>
+                <td><textarea name="description" id="" cols="15" rows="5"></textarea></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" name="submit" value="SEND">
+                    <input type="reset" name="cancel" value="CANCEL"></td>
+            </tr>
+        </table>
+        <br><br><br>
+        <table align="center" border="1">
+            <tr>
+               <th>Feedbacks</th> 
+               <th>Action</th>
+            </tr>
+            {% for i in F %}
+            <tr>
+                <td>{{i.description}}</td>
+                <td><a href="{% url 'doctor:dlt-DR_FEEDBACK' i.id %}">Delete</a></td>
+            </tr>
+            {% endfor %}
+            
+        </table>
+    </div>
+    </form>
+    {% endblock content %}
+</body>
+</html>

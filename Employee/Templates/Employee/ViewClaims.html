@@ -1,0 +1,41 @@
+{% extends 'Employee/Head.html' %}
+{% load static %}
+{% load mathfilters %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post">
+        <br><br><br><br><h1 align="center">View Claims</h1><br><br><br><br>
+        <div id="tab" align="center">
+
+        {% csrf_token %}
+        <table border="2" align="center">     <!--- dispay the list of district which are we entered-->
+            <tr>
+                <th>Claim Amount</th>
+           
+                <th>Payed Amount</th>
+                <th>Balance</th>
+            </tr>
+            {% for i in res %}
+            <tr>
+                <td>{{i.Insurance_amount}}</td>
+                <td>{{i.Insurance_PaymentAmount}}</td>
+                {% with amount=i.Insurance_amount subt=i.Insurance_PaymentAmount %}
+                <td>{{amount |sub:subt }}</td>
+                {% endwith %}
+            </tr>
+            {% endfor %}
+            </table>
+            </div>
+            </form>
+</body>
+</html>
+{% endblock %}

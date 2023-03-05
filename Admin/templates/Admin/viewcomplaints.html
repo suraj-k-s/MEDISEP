@@ -1,0 +1,85 @@
+
+{% extends 'Admin/Head.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <div id="tab">
+    <form action="" method="post">
+        {% csrf_token %}
+        
+        <br><br><br>
+        <center><h2>User Complaints</h2></center>
+        <table align="center" border="1">
+            <tr>
+                
+                <th>User Name</th>
+                <th>ComplaintType</th>
+                <th>Title</th>
+                <th>Content</th>
+            </tr>
+            {% for i in U %}
+            <tr>
+                <td>{{i.Member.Mem_name}}</td>
+                <td>{{i.complainttype}}</td>
+                <td>{{i.title}}</td>
+                <td>{{i.content}}</td>
+            </tr>
+            {% endfor %}
+            
+        </table>
+        <br><br><br>
+        <center><h2>Hospital Complaints</h2></center>
+        <table align="center" border="1">
+            <tr>
+                
+                <th>Hospital Name</th>
+                <th>ComplaintType</th>
+                <th>Title</th>
+                <th>Content</th>
+            </tr>
+            {% for i in H %}
+            <tr>
+                <td>{{i.hospital.Hos_name}}</td>
+                <td>{{i.complainttype}}</td>
+                <td>{{i.title}}</td>
+                <td>{{i.content}}</td>
+            </tr>
+            {% endfor %}
+            
+        </table>
+        <br><br><br>
+        <center><h2>Consultancy Complaints</h2></center>
+        <table align="center" border="1">
+            <tr>
+                
+                <th>Consultancy Name</th>
+                <th>ComplaintType</th>
+                <th>Title</th>
+                <th>Content</th>
+            </tr>
+            {% for i in C %}
+            <tr>
+                <td>{{i.consultancy.Consultancy_name}}</td>
+                <td>{{i.complainttype}}</td>
+                <td>{{i.title}}</td>
+                <td>{{i.content}}</td>
+            </tr>
+            {% endfor %}
+            
+        </table>
+        
+        
+    </form>
+</div>
+</body>
+</html>
+
+{% endblock content %}

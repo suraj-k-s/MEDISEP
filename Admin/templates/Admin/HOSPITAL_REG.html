@@ -1,0 +1,142 @@
+{% extends 'Admin/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post" id="HospitalForm" data-places-url="{% url 'guest:Ajax_Place' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div id="tab" align="center" >
+        <br><br><br><br><h1 align="center">HOSPITAL REGISTRATION</h1><br><br><br><br>
+       
+        <table border="3" align="center">
+            <tr> 
+                <td>NAME OF HOSPITAL</td>
+                <td><input required type="text" name="txt_hos_name" required="" autocomplete="off" title="Name Allows Only Alphabets,Spaces and First Letter Must Be Capital Letter" pattern="^[A-Z]+[a-zA-Z ]*$"/></td>
+              <!--  <td><input type="text" name="txt_hos_name" required="" autocomplete="off"></td>   required and autocompete are uesd to avoid auto suggestions -->
+            </tr>
+            <tr><td>ADDRESS </td>
+                <td><textarea name="txt_hos_address" cols="20" rows="5"></textarea></td>
+            </tr>
+            <tr><td>CONTACT NUMBER </td>
+               <!-- <td><input type="text" name="txt_hos_contact" required="" autocomplete="off"></td>--->
+                <td><input type="text" required name="txt_hos_contact" required="" autocomplete="off" pattern="[7-9]{1}[0-9]{9}" 
+                    title="Phone number with 7-9 and remaing 9,8,7,6 digit with 0-9"/></td>
+            </tr>
+            <tr><td>EMAIL ID </td>
+                <td><input type="email" name="txt_hos_emailid"  placeholder="Enter valid Email" required="" autocomplete="off"></td>
+                <!--pattern="[^ @]@[^ @]" placeholder="Enter valid Email"  --->
+            </tr>
+            <tr>
+                <td>DISTRICT</td>       <!--- setting dropdown box of employee department name form-->
+                <td><select name="sel_hos_district" id="district">
+                    <option value="">---select---</option>
+                    {%  for i in DIS %}
+                    <option value="{{i.id}}">{{i}}</option>
+                    {% endfor %}
+                </select></td>
+            </tr>
+            <tr>
+                <td>PLACE LOCATED</td>       <!--- setting dropdown box of employee department name form-->
+                <td><select name="sel_hos_place" id="place">
+                    <option value="">---select---</option>
+                </select></td>
+            </tr>
+            <tr> 
+                <td>HOSPITAL TYPE</td>      <!--- setting dropdown box of employee department name form-->
+                <td><select name="sel_hos_type" id="hospitaltype">
+                    <option value="">---select---</option>
+                    {%  for i in HST %}
+                    <option value="{{i.id}}">{{i}}</option>
+                    {% endfor %}
+                </select></td>
+            </tr>
+            <tr><td>HOSPITAL LOGO </td>
+                <td><input type="file" name="txt_hosfile" required="" autocomplete="off"></td>
+            </tr>
+            <tr><td>HOSPITAL PROOF</td>
+                <td><input type="file" name="txt_hos_proof" required="" autocomplete="off"></td>
+            </tr>
+            <tr><td>HOSPITAL PASSWORD</td>
+                <!--<td><input type="password" name="txt_hos_pswd" required="" autocomplete="off"></td>--->
+                <td><input type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required name="txt_hos_pswd" /></td>
+            </tr>
+            <tr><td>WHETHER HOSPITAL IS ACTIVE OR NOT</td>
+                <td><input type="radio" name="hospital_isactive" value="YES">YES
+                    <input type="radio" name="hospital_isactive" value="NO">NO</td>
+            </tr>           
+            <tr><td>DATE OF ESTABLISHMENT</td>
+                <td><input type="date" name="txt_hos_estblish" required="" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td  colspan="2" align="center"><input type="submit" name="save" value="SAVE">
+                    <input type="reset" name="cancel" value="CANCEL"></td>
+            </tr>
+        </table>
+    
+        <br><br><br>
+        <div id="tab" align="center">
+        <table border="2" align="center">     <!--- dispay the list of district which are we entered-->
+            <tr>
+                <th>NAME OF HOSPITAL</th> 
+                <th>ADDRESS</th>
+                <th>CONTACT NUMBER </th>
+                <th>EMAIL ID OF HOSPITAL</th>
+                <th>PLACE</th>
+                <th>PHOTO</th>
+                <th>LOGO</th>                
+                <th>HOSPITAL TYPE</th>
+                <th>HOSPITAL IS ACTIVE OR NOT</th>
+                <!--<th>HOSPITAL ESTABLISHMENT</th>-->
+                <th colspan="2">Action</th>
+            </tr>
+            
+            {% for i in HSR %}
+            <tr>
+                <td>{{i.Hos_name}}</td>
+                <td>{{i.Hos_address}}</td>
+                <td>{{i.Hos_contact}}</td>
+                <td>{{i.Hos_emailid}}</td>
+                <td>{{i.Hos_Place}}</td>
+                <td><img src="{{i.Hos_proof.url}}" alt="" width="120px" height="120px"></td>
+                <td><img src="{{i.Hos_logo.url}}" alt="" width="120px" height="120px"></td>
+                <td>{{i.Hospital_type}}</td>
+            <!--    <td>{{i.Hos_proof}}</td>
+                <td>{{i.Hos_password}}</td>--->
+                <td>{{i.Hos_isactive}}</td>
+             <!--   <td>{{i.Hos_establishment}}</td>
+                <td>{{i.Hos_veri_status}}</td>--->
+                <td><a href="{% url 'webadmin:dlt-HOS_REGISTRATION' i.id %}">Delete</a></td>   
+            
+            </tr>   
+            {% endfor %}
+        </table>
+    </div>
+        <br><br><br><br><br><br><br><br>
+    </form>  
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!--Ajax of Place-->
+    <script>
+        $("#district").change(function () {
+            var did = $(this).val();
+            var ur = $("#HospitalForm").attr("data-places-url");
+            $.ajax({
+                url: ur,
+                data: { DIST: did, },
+                success: function (data) {
+                    $("#place").html(data);
+                },
+            });
+        });
+</script>
+
+{% endblock content %}

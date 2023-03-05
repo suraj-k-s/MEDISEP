@@ -1,0 +1,31 @@
+{% extends 'Admin/Head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div id="tab" align="center" style="margin-left:250px">
+        <br><br><br><br><h1 align="center">Edit ComplaintType</h1><br><br><br><br>
+        
+        <table border="3" align="center">
+            <tr> 
+                <td>COMPLAINT TYPE</td>
+                <td><input type="text" name="txt_cmptype" value="{{CT.cmptype}}"></td>
+            </tr>
+            <tr>
+                <td  colspan="2" align="center"><input type="submit" name="save" value="SAVE">
+                    <input type="reset" name="cancel" value="CANCEL"></td>
+            </tr>
+        </table>
+    </div>
+        <br><br><br><br><br><br><br><br>
+        {% endblock content %}

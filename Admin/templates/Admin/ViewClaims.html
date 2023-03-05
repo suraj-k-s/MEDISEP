@@ -1,0 +1,41 @@
+{% extends 'Admin/Head.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div id="tab" align="center" style="margin-left:50px">
+        <br><br><br><br><h1 align="center">View Claims</h1><br><br><br><br>
+        
+        <table border="1" align="center">
+            <tr><th>Employee Name</th>
+                <th>PEN_NO</th>
+                <th>Claim Amount</th>
+                <th>Consultancy Name</th>
+                <th colspan="2">Action</th>
+            </tr>
+            {% for i in sel %}
+            <tr>
+                <td>{{i.medicine_id.checkdetails.member_id.Emp_reg.Emp_name}}</td>
+                <th>{{i.Emp_PEno}}</th>
+                <td>{{i.claim_amount}}</td>
+                <td>{{i.consultancy_id.Consultancy_name}}</td>
+                <td><a href="{% url 'webadmin:AcceptClaim' i.id %}">Accept Claim</a>|
+                    <a href="{% url 'webadmin:RejectClaim' i.id %}">Reject Claim</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    </form>
+</body>
+<br><br><br><br><br><br><br><br>
+{% endblock content %}
+</html>
